@@ -16,5 +16,5 @@ We must also handle two kind of websites:
 * "javascript" modern websites that requires tools like [Selenium](https://selenium-python.readthedocs.io/)
 
 The image below shows the scraping workflow.
-![scraping](doc/images/workflow.png)
+![scraping](doc/images/scraping_flow.png)
 
