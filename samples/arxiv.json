@@ -1,0 +1,15 @@
+{
+	"rootUrl": "https://arxiv.org/search/cs",
+	"baseUrl": "https://arxiv.org",
+	"form": {
+		"fields": [
+			{
+				"name": "query",
+				"value": "deep learning"
+			}
+		]
+	},
+	"nextPage": {
+      "xpath": "xpath_to_next_page_link"
+    }
+}

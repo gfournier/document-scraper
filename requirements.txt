@@ -1,0 +1,4 @@
+dataclasses
+dataclasses-json
+lxml
+requests
