@@ -40,8 +40,8 @@ Here is a configuration example for arXiv website:
 		"term": "deep learning"
 	},
 	"nextPage": {
-      "xpath": "xpath_to_next_page_link"
-    },
+		  "xpath": "xpath_to_next_page_link"
+        },
 	"item": {
 		"selector": "xpath_to_element_in_list",
 		"navigation": [
