@@ -1,5 +1,5 @@
 import json
-from typing import List, Optional
+from typing import List, Optional, Any
 
 from dataclasses import dataclass
 from dataclasses_json import dataclass_json, LetterCase
@@ -9,7 +9,7 @@ from dataclasses_json import dataclass_json, LetterCase
 @dataclass
 class Field:
     name: str
-    value: str
+    value: Any
 
 
 @dataclass_json(letter_case=LetterCase.CAMEL)
@@ -22,6 +22,7 @@ class XPathExpression:
 @dataclass_json(letter_case=LetterCase.CAMEL)
 @dataclass
 class Form:
+    method: str
     fields: List[Field]
 
 
@@ -31,7 +32,7 @@ class Config:
     root_url: str
     base_url: str
     next_page: XPathExpression
-    form: Form
+    form: Optional[Form] = None
 
 
 def load_config(filename):

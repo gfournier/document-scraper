@@ -2,10 +2,27 @@
 	"rootUrl": "https://arxiv.org/search/cs",
 	"baseUrl": "https://arxiv.org",
 	"form": {
+		"method": "GET",
 		"fields": [
 			{
 				"name": "query",
 				"value": "deep learning"
+			},
+			{
+				"name": "searchtype",
+				"value": "all"
+			},
+			{
+				"name": "abstracts",
+				"value": "hide"
+			},
+			{
+				"name": "order",
+				"value": "-announced_date_first"
+			},
+			{
+				"name": "size",
+				"value": "25"
 			}
 		]
 	},

@@ -2,9 +2,9 @@ import abc
 import logging
 import re
 import time
-from urllib.parse import urljoin
+from urllib.parse import urljoin, quote
 
-from documentscraper.config import Config, XPathExpression
+from documentscraper.config import Config, XPathExpression, Form
 
 
 class ScraperEngineBase(metaclass=abc.ABCMeta):
@@ -79,10 +79,21 @@ class DocumentScraper:
 
     def run(self, config: Config, output_path=None):
         self._log_navigate(config.root_url)
-        page = self.engine.get_page(config.root_url)
+        page = self._get_first_page(config.root_url, config.form)
         while page is not None:
             items = self._scrap_items(page, config.root_url, None)
             page = self._get_next_page(page, config.base_url, config.next_page)
+
+    def _get_first_page(self, url: str, form: Form):
+        if form is None:
+            return self.engine.get_page(url)
+        elif form.method == "GET":
+            # Build query string: url?name1=value1&name2=value2
+            query_string = "&".join([f"{field.name}={quote(str(field.value))}" for field in form.fields])
+            query_url = f"{url}?{query_string}"
+            return self.engine.get_page(query_url)
+        else:
+            raise NotImplementedError(f"Form method [{form.method}] not handled.")
 
     def _get_next_page(self, current_page, base_url: str, next_page: XPathExpression):
         element = self.engine.get_element(current_page, next_page.xpath)
@@ -103,4 +114,10 @@ class DocumentScraper:
             time.sleep(self.wait_interval)
 
     def _scrap_items(self, page, root_url, item_config):
+        # Get all items from the result list
+        # For each item:
+        #  - navigate to sub page
+        #  - in sub page look for metadata
+        # ( - in sub page look for documents)
+        # Reload previous page ?
         return []
