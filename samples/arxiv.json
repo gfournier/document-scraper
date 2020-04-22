@@ -28,5 +28,15 @@
 	},
 	"nextPage": {
       "xpath": "xpath_to_next_page_link"
-    }
+    },
+	"item": {
+		"output": {
+			"metadata": {
+				"date": {
+					"xpath": "//div[@class=\"dateline\"]",
+					"regex": "Submitted on (.*)]"
+				}
+			}
+		}
+	}
 }

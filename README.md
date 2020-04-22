@@ -41,7 +41,7 @@ Here is a configuration example for arXiv website:
 	},
 	"nextPage": {
 		  "xpath": "xpath_to_next_page_link"
-        },
+       },
 	"item": {
 		"selector": "xpath_to_element_in_list",
 		"navigation": [

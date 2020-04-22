@@ -1,5 +1,5 @@
 import json
-from typing import List, Optional, Any
+from typing import List, Optional, Any, Dict
 
 from dataclasses import dataclass
 from dataclasses_json import dataclass_json, LetterCase
@@ -28,10 +28,23 @@ class Form:
 
 @dataclass_json(letter_case=LetterCase.CAMEL)
 @dataclass
+class Output:
+    metadata: Dict[str, XPathExpression]
+
+
+@dataclass_json(letter_case=LetterCase.CAMEL)
+@dataclass
+class Item:
+    output: Output
+
+
+@dataclass_json(letter_case=LetterCase.CAMEL)
+@dataclass
 class Config:
     root_url: str
     base_url: str
     next_page: XPathExpression
+    item: Item
     form: Optional[Form] = None
 
 
