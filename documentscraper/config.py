@@ -35,6 +35,8 @@ class Output:
 @dataclass_json(letter_case=LetterCase.CAMEL)
 @dataclass
 class Item:
+    selector: str
+    navigation: List[str]
     output: Output
 
 

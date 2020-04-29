@@ -4,12 +4,34 @@ import re
 import time
 from urllib.parse import urljoin, quote
 
-from documentscraper.config import Config, XPathExpression, Form
+import requests
+from lxml import html
+
+from documentscraper.config import Config, XPathExpression, Form, Item
 
 
 class ScraperEngineBase(metaclass=abc.ABCMeta):
     """
     Base class for engines. Defines contract for navigation methods.
+
+    "rootUrl": ,
+    "baseUrl": ,
+    "form": {
+        "method": "GET",
+    "item" : [{
+        "selector":
+        },
+        "output": {
+            "id": ,
+            "metadata":
+                "author": ,
+                "date": ,
+        },
+        "fields": [
+        ]
+    ]
+    "next_page": {
+    }
     """
 
     @abc.abstractmethod
@@ -81,7 +103,7 @@ class DocumentScraper:
         self._log_navigate(config.root_url)
         page = self._get_first_page(config.root_url, config.form)
         while page is not None:
-            items = self._scrap_items(page, config.root_url, None)
+            items = self._scrap_items(page, config.root_url, config.item)
             page = self._get_next_page(page, config.base_url, config.next_page)
 
     def _get_first_page(self, url: str, form: Form):
@@ -113,7 +135,22 @@ class DocumentScraper:
         if self.wait_interval is not None:
             time.sleep(self.wait_interval)
 
-    def _scrap_items(self, page, root_url, item_config):
+    def _scrap_items(self, page, root_url, item_config:Item):
+
+        results = page.xpath(item_config.selector)
+        count = 0
+        for result in results:
+            count = count+1
+            links = result.xpath(item_config.navigation[0])
+            article_url= links[0].xpath("@href")
+            doc_tree2 = self.engine.get_page(article_url[0])
+            author = doc_tree2.xpath(item_config.output.metadata["author"].xpath)
+            print(author[0].text)
+            #title =
+            date= doc_tree2.xpath(item_config.output.metadata["date"].xpath)
+            print(date[0].text.strip())
+            # récupérer PDF
+
         # Get all items from the result list
         # For each item:
         #  - navigate to sub page

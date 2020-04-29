@@ -30,8 +30,13 @@
       "xpath": "xpath_to_next_page_link"
     },
 	"item": {
+		"selector": "//*[@id=\"main-container\"]//li[@class=\"arxiv-result\"]",
+		"navigation": ["div/p/a" ],
 		"output": {
+			"id": "//li[@class=\"arxiv-result\"]/div/p/a",
 			"metadata": {
+				"author":{"xpath":  "//*[@id=\"abs\"]/div[@class=\"authors\"]//a"},
+				"title":{"xpath":  " "},
 				"date": {
 					"xpath": "//div[@class=\"dateline\"]",
 					"regex": "Submitted on (.*)]"
